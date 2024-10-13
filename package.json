@@ -1,0 +1,53 @@
+{
+  "name": "evdc-back-bff",
+  "version": "1.0.0",
+  "description": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TotalEnergiesCode/evdc-back-bff"
+  },
+  "author": "Groupe onepoint",
+  "license": "ISC",
+  "main": "src/index.ts",
+  "scripts": {
+    "build": "rm -rf ./_dist && tsc && tsc-alias",
+    "start": "ts-node src/index.ts",
+    "linter": "eslint --ext .ts .",
+    "linter:fix": "eslint --ext .ts . --fix",
+    "prettier": "prettier --check **/*.ts",
+    "prettier:fix": "prettier --write **/*.ts"
+  },
+  "dependencies": {
+    "fs": "^0.0.1-security",
+    "ts-node": "^10.9.2",
+    "tsc-alias": "^1.8.10"
+  },
+  "devDependencies": {
+    "@types/node": "^20.16.11",
+    "@typescript-eslint/eslint-plugin": "^7.10.0",
+    "@typescript-eslint/parser": "^7.10.0",
+    "@vitest/coverage-istanbul": "^1.6.0",
+    "@vitest/ui": "^1.6.0",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-import-resolver-typescript": "^3.6.1",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-prettier": "^5.1.3",
+    "eslint-plugin-unused-imports": "^3.2.0",
+    "lint-staged": "^15.2.4",
+    "prettier": "^3.2.5",
+    "typescript": "^5.4.5",
+    "vitest": "^1.6.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "./**/*.ts": [
+      "eslint --ext .ts . --fix",
+      "prettier --write **/*.ts"
+    ]
+  }
+}
