@@ -15,4 +15,5 @@ export enum ObjectLabelEnum {
   MOUNTAIN = "M",
   TREASURE = "T",
   ADVENTURER = "A",
+  EMPTY = ".",
 }

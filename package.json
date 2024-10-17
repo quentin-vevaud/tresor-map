@@ -6,8 +6,8 @@
     "type": "git",
     "url": "https://github.com/TotalEnergiesCode/evdc-back-bff"
   },
-  "author": "Groupe onepoint",
-  "license": "ISC",
+  "author": "Quentin Vevaud",
+  "license": "UNLICENSED",
   "main": "src/index.ts",
   "scripts": {
     "build": "rm -rf ./_dist && tsc && tsc-alias",
@@ -18,6 +18,8 @@
     "prettier:fix": "prettier --write **/*.ts"
   },
   "dependencies": {
+    "@sinclair/typebox": "^0.33.17",
+    "ajv": "^8.17.1",
     "fs": "^0.0.1-security",
     "ts-node": "^10.9.2",
     "tsc-alias": "^1.8.10"

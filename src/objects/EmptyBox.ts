@@ -1,12 +1,12 @@
 import { Box } from "./Box";
 import { ObjectLabelEnum } from "./Enums";
 
-export class Mountain extends Box {
+export class EmptyBox extends Box {
   constructor(xAxis: number, yAxis: number) {
-    super(ObjectLabelEnum.MOUNTAIN, xAxis, yAxis);
+    super(ObjectLabelEnum.EMPTY, xAxis, yAxis);
   }
 
   isOccupied(): boolean {
-    return true;
+    return false;
   }
 }
