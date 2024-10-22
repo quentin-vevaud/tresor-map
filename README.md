@@ -2,11 +2,6 @@
 
 ## Project Setup
 
-### Prerequisites
-
-- Node.js (version 14.x or higher)
-- Yarn (version 1.x or higher)
-
 ### Installation
 
 1. Install dependencies:
