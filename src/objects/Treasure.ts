@@ -1,24 +1,30 @@
 import { Box } from "./Box";
-import { ObjectLabelEnum } from "./Enums";
+import { EntityLabelEnum } from "./Enums";
 
 export class Treasure extends Box {
   constructor(
-    xAxis: number,
-    yAxis: number,
+    row: number,
+    column: number,
     private amount: number,
   ) {
-    super(ObjectLabelEnum.TREASURE, xAxis, yAxis);
-  }
-
-  isOccupied(): boolean {
-    return false;
+    super(EntityLabelEnum.TREASURE, row, column);
   }
 
   getAmount(): number {
     return this.amount;
   }
 
-  setAmount(amount: number): void {
-    this.amount = amount;
+  collect(): number {
+    if (this.amount === 0) return 0;
+    this.amount--;
+    return 1;
+  }
+
+  toString(): string {
+    return `${this.label}(${this.amount})`;
+  }
+
+  toParsedResult(): string[] {
+    return super.toParsedResult().concat(this.amount.toString());
   }
 }

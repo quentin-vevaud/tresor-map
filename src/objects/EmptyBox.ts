@@ -1,12 +1,8 @@
 import { Box } from "./Box";
-import { ObjectLabelEnum } from "./Enums";
+import { EntityLabelEnum } from "./Enums";
 
 export class EmptyBox extends Box {
-  constructor(xAxis: number, yAxis: number) {
-    super(ObjectLabelEnum.EMPTY, xAxis, yAxis);
-  }
-
-  isOccupied(): boolean {
-    return false;
+  constructor(row: number, column: number) {
+    super(EntityLabelEnum.EMPTY, row, column);
   }
 }

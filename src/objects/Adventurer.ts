@@ -1,43 +1,74 @@
-import { Box } from "./Box";
-import { MovementEnum, ObjectLabelEnum, OrientationEnum } from "./Enums";
+import { EntityLabelEnum, MovementEnum, OrientationEnum } from "./Enums";
+import { MapEntity } from "./MapEntity";
 
-export class Adventurer extends Box {
+export class Adventurer extends MapEntity {
   private reversedMovements: MovementEnum[];
+  private readonly ORDERED_ORIENTATIONS = Object.values(OrientationEnum);
+  private collectedTreasures = 0;
 
   constructor(
-    xIndex: number,
-    yIndex: number,
+    private readonly name: string,
+    row: number,
+    column: number,
     private orientation: OrientationEnum,
     movements: MovementEnum[],
-    private readonly name: string,
   ) {
-    super(ObjectLabelEnum.ADVENTURER, xIndex, yIndex);
-
+    super(EntityLabelEnum.ADVENTURER, row, column);
     this.reversedMovements = movements.reverse();
   }
 
-  isOccupied(): boolean {
-    return true;
+  turnLeft(): void {
+    const indexOfOrientation = this.ORDERED_ORIENTATIONS.indexOf(
+      this.orientation,
+    );
+
+    const previousOrientation =
+      this.ORDERED_ORIENTATIONS[indexOfOrientation - 1] ||
+      this.ORDERED_ORIENTATIONS[this.ORDERED_ORIENTATIONS.length - 1];
+
+    this.orientation = previousOrientation;
+  }
+
+  turnRight(): void {
+    const indexOfOrientation = this.ORDERED_ORIENTATIONS.indexOf(
+      this.orientation,
+    );
+
+    const nextOrientation =
+      this.ORDERED_ORIENTATIONS[indexOfOrientation + 1] ||
+      this.ORDERED_ORIENTATIONS[0];
+
+    this.orientation = nextOrientation;
   }
 
   getOrientation(): OrientationEnum {
     return this.orientation;
   }
 
-  setOrientation(orientation: OrientationEnum): void {
-    this.orientation = orientation;
-  }
-
   act(): MovementEnum | undefined {
     return this.reversedMovements.pop();
   }
 
-  getName(): string {
-    return this.name;
+  setPosition(row: number, column: number): void {
+    this.row = row;
+    this.column = column;
   }
 
-  setPosition(xIndex: number, yIndex: number): void {
-    this.xIndex = xIndex;
-    this.yIndex = yIndex;
+  collectTreasure(): void {
+    this.collectedTreasures++;
+  }
+
+  getCollectedTreasures(): number {
+    return this.collectedTreasures;
+  }
+
+  toString(): string {
+    return `${this.label}(${this.name})`;
+  }
+
+  toParsedResult(): string[] {
+    return [this.name]
+      .concat(super.toParsedResult())
+      .concat([this.orientation, this.collectedTreasures.toString()]);
   }
 }

@@ -11,7 +11,7 @@ export enum MovementEnum {
   FORWARD = "A",
 }
 
-export enum ObjectLabelEnum {
+export enum EntityLabelEnum {
   MOUNTAIN = "M",
   TREASURE = "T",
   ADVENTURER = "A",

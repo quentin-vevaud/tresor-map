@@ -12,6 +12,7 @@
   "scripts": {
     "build": "rm -rf ./_dist && tsc && tsc-alias",
     "start": "ts-node src/index.ts",
+    "test": "vitest",
     "linter": "eslint --ext .ts .",
     "linter:fix": "eslint --ext .ts . --fix",
     "prettier": "prettier --check **/*.ts",

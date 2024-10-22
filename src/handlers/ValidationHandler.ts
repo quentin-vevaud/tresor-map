@@ -16,27 +16,37 @@ export class ValidationHandler {
     strictTypes: true,
   });
 
-  public validateMountain(mountain: Mountain): void {
-    if (!this.ajv.validate(mountainSchema, mountain)) {
+  constructor() {}
+
+  public validateMountain(
+    mountain: Mountain,
+    rowSize: number,
+    columnSize: number,
+  ): void {
+    if (!this.ajv.validate(mountainSchema(rowSize, columnSize), mountain)) {
       throw this.getValidationException();
     }
   }
 
-  public validateAdventurer(adventurer: Adventurer): void {
-    if (!this.ajv.validate(adventurerSchema, adventurer)) {
+  public validateAdventurer(
+    adventurer: Adventurer,
+    rowSize: number,
+    columnSize: number,
+  ): void {
+    if (!this.ajv.validate(adventurerSchema(rowSize, columnSize), adventurer)) {
       throw this.getValidationException();
     }
   }
 
-  public validateTreasure(box: Box): void {
-    if (!this.ajv.validate(treasureSchema, box)) {
+  public validateTreasure(box: Box, rowSize: number, columnSize: number): void {
+    if (!this.ajv.validate(treasureSchema(rowSize, columnSize), box)) {
       throw this.getValidationException();
     }
   }
 
   public validateTreasureMapLine(entry: string[]): void {
     if (entry[0] !== "C") {
-      throw new Error("You must define the map in the first line of the file");
+      throw new Error("You must define the map in the first row of the file");
     }
     if (!this.ajv.validate(treasureMapEntrySchema, entry.slice(1))) {
       throw this.getValidationException();

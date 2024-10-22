@@ -1,11 +1,13 @@
 import * as process from "node:process";
 import { FileHandler } from "./FileHandler";
-import { SimulationToTreasureMapMapper } from "./SimulationToTreasureMapMapper";
+import { GameHandler } from "./GameHandler";
+import { ParsedSimulationToGameInitialisationMapper } from "./ParsedSimulationToTreasureMapMapper";
 
 export class SimulationHandler {
   launch() {
     try {
       this.handleSimulation();
+      process.exit(0);
     } catch (e) {
       console.error(e);
       process.exit(1);
@@ -17,17 +19,21 @@ export class SimulationHandler {
 
     const parsedSimulation = fileHandler.getParsedSimulationDefinition();
 
-    const simulationToTreasureMapMapper = new SimulationToTreasureMapMapper();
+    const simulationToGameInitialisation =
+      new ParsedSimulationToGameInitialisationMapper();
 
-    const map =
-      simulationToTreasureMapMapper.mapParsedSimulationToTreasureMap(
+    const gameInitialisation =
+      simulationToGameInitialisation.mapParsedSimulationToGameDefinition(
         parsedSimulation,
       );
 
-    map.forEach((line) => line.forEach((cell) => console.log(cell.getLabel())));
+    const gameResult = new GameHandler(gameInitialisation).play();
 
-    // new GameHandler(map).play();
+    const parsedResult =
+      simulationToGameInitialisation.mapGameDefinitionToParsedResult(
+        gameResult,
+      );
 
-    // simulationToTreasureMapMapper.fileHandler.writeResultFile();
+    fileHandler.writeResultFile(parsedResult);
   }
 }

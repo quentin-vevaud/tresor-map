@@ -1,26 +1,10 @@
-import tsconfigPaths from "vite-tsconfig-paths";
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-  plugins: [tsconfigPaths({})],
   test: {
     coverage: {
       enabled: true,
-      exclude: [
-        "**/BFFLogger.ts",
-        "**/DbClient.ts",
-        "**/GetRandomInt.ts",
-        "**/HttpClient.ts",
-        "**/JwtUtils.ts",
-        "**/LoggerConfig.ts",
-        "**/ParamsSerializer.ts",
-        "**/SNSClient.ts",
-        "**/SecretClient.ts",
-        "**/generated/**",
-        "src/index.ts",
-        "src/infrastructure/app.ts",
-        "src/infrastructure/swagger",
-      ],
+      exclude: ["src/index.ts"],
       include: ["src/"],
       provider: "istanbul",
       reportOnFailure: true,
@@ -32,11 +16,11 @@ export default defineConfig({
         statements: 90,
       },
     },
-    include: ["tests-vitest/**/*.test.ts"],
+    include: ["tests/**/*.test.ts"],
     logHeapUsage: true,
     passWithNoTests: true,
     reporters: ["basic"],
-    setupFiles: ["dotenv/config", "./tests-vitest/setup.ts"],
+    setupFiles: ["./tests/setup.ts"],
     testTimeout: 10000,
   },
 });

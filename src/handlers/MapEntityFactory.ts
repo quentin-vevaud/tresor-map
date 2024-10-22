@@ -1,26 +1,30 @@
 import { Adventurer } from "../objects/Adventurer";
-import { Box } from "../objects/Box";
 import {
+  EntityLabelEnum,
   MovementEnum,
-  ObjectLabelEnum,
   OrientationEnum,
 } from "../objects/Enums";
+import { MapEntity } from "../objects/MapEntity";
 import { Mountain } from "../objects/Mountain";
 import { Treasure } from "../objects/Treasure";
 import { ValidationHandler } from "./ValidationHandler";
 
-export class BoxFactory {
+export class MapEntityFactory {
   private readonly validationHandler = new ValidationHandler();
 
-  constructor(private readonly objectData: string[]) {}
+  constructor(
+    private readonly objectData: string[],
+    private readonly rowSize: number,
+    private readonly columnSize: number,
+  ) {}
 
-  createBox(): Box {
-    switch (this.objectData[0] as ObjectLabelEnum) {
-      case ObjectLabelEnum.MOUNTAIN:
+  createMapEntity(): MapEntity {
+    switch (this.objectData[0] as EntityLabelEnum) {
+      case EntityLabelEnum.MOUNTAIN:
         return this.createMountain();
-      case ObjectLabelEnum.TREASURE:
+      case EntityLabelEnum.TREASURE:
         return this.createTreasure();
-      case ObjectLabelEnum.ADVENTURER:
+      case EntityLabelEnum.ADVENTURER:
         return this.createAdventurer();
       default:
         throw new Error("Invalid box label");
@@ -28,21 +32,29 @@ export class BoxFactory {
   }
 
   private createMountain(): Mountain {
-    const mountain = new Mountain(+this.objectData[1], +this.objectData[2]);
+    const mountain = new Mountain(+this.objectData[2], +this.objectData[1]);
 
-    this.validationHandler.validateMountain(mountain);
+    this.validationHandler.validateMountain(
+      mountain,
+      this.rowSize,
+      this.columnSize,
+    );
 
     return mountain;
   }
 
   private createTreasure(): Treasure {
     const treasure = new Treasure(
-      +this.objectData[1],
       +this.objectData[2],
+      +this.objectData[1],
       +this.objectData[3],
     );
 
-    this.validationHandler.validateTreasure(treasure);
+    this.validationHandler.validateTreasure(
+      treasure,
+      this.rowSize,
+      this.columnSize,
+    );
 
     return treasure;
   }
@@ -51,14 +63,18 @@ export class BoxFactory {
     const movementList = this.objectData[5].split("") as MovementEnum[];
 
     const adventurer = new Adventurer(
-      +this.objectData[2],
+      this.objectData[1],
       +this.objectData[3],
+      +this.objectData[2],
       this.objectData[4] as OrientationEnum,
       movementList,
-      this.objectData[1],
     );
 
-    this.validationHandler.validateAdventurer(adventurer);
+    this.validationHandler.validateAdventurer(
+      adventurer,
+      this.rowSize,
+      this.columnSize,
+    );
 
     return adventurer;
   }

@@ -1,23 +1,31 @@
-import { ObjectLabelEnum } from "./Enums";
+import { Adventurer } from "./Adventurer";
+import { EntityLabelEnum } from "./Enums";
+import { MapEntity } from "./MapEntity";
 
-export abstract class Box {
+export abstract class Box extends MapEntity {
+  protected adventurer: Adventurer | undefined;
+
   protected constructor(
-    protected readonly label: ObjectLabelEnum,
-    protected xIndex: number,
-    protected yIndex: number,
-  ) {}
-
-  abstract isOccupied(): boolean;
-
-  getXIndex(): number {
-    return this.xIndex;
+    protected readonly label: EntityLabelEnum,
+    row: number,
+    column: number,
+  ) {
+    super(label, row, column);
   }
 
-  getYIndex(): number {
-    return this.yIndex;
+  isOccupied(): boolean {
+    return !!this.adventurer;
   }
 
-  getLabel(): ObjectLabelEnum {
-    return this.label;
+  getAdventurer(): Adventurer | undefined {
+    return this.adventurer;
+  }
+
+  setAdventurer(adventurer: Adventurer | undefined): void {
+    this.adventurer = adventurer;
+  }
+
+  toString(): string {
+    return this.adventurer?.toString() || this.label;
   }
 }
